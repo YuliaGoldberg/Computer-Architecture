@@ -1,0 +1,26 @@
+#format is target-name: target dependencies
+#{-tab-}actions
+
+# All Targets
+all: shell
+
+# Tool invocations
+# Executable "myshell" depends on the files task1.o and LineParser.o
+shell: task1.o LineParser.o	
+	gcc -m32 -g -Wall -o shell LineParser.o task1.o
+
+# Depends on the source and header files
+
+LineParser.o: LineParser.c 
+	gcc -m32 -Wall -ansi -c -nostdlib -fno-stack-protector LineParser.c -o LineParser.o 
+	
+task1.o: task1.c 
+	gcc -m32 -Wall -ansi -c -nostdlib -fno-stack-protector task1.c -o task1.o 
+
+
+#tell make that "clean" is not a file name!
+.PHONY: clean
+
+#Clean the build directory
+clean: 
+	rm -f *.o shell
